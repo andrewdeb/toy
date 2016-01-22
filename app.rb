@@ -48,7 +48,7 @@ products_hash["items"].each do |toy|
   puts "Average price :$#{avprice}"
   #Calculate discount
   discountval = 0.00
-  discountval = retail_price - avprice 
+  discountval = retail_price.to_f - avprice.to_f
   puts "Discount :$#{discountval}"
   puts "   "   
 end
