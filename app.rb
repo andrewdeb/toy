@@ -1,6 +1,6 @@
 require 'json'
-#path = File.join(File.dirname(__FILE__), '../data/products.json')
-path = File.join(File.dirname(__FILE__), '../data/products.json')
+#path = File.join(File.dirname(__FILE__), 'c:/toy/products.json')
+path = File.join(File.dirname(__FILE__), 'products.json')
 file = File.read(path)
 products_hash = JSON.parse(file)
 
@@ -65,4 +65,30 @@ end
   # Count and print the number of the brand's toys we stock
   # Calculate and print the average price of the brand's toys
   # Calculate and print the total revenue of all the brand's toy sales combined
+ 
+ # Create an array of unique brands, then select brand from products_hash
+ unique_brands = products_hash["items"].map { |item| item["brand"]}.uniq
+  unique_brands.each_with_index do |brand,index|
+  brands_toys = products_hash["items"].select { |item| item["brand"]==brand}
+  # Set variable values to zero
+  full_price_brand=0
+  stock_brand = 0
+  purchase_price=0
+  purchases_hashcount=0
+ #For each item in brand hash, calculate stock total and full price
+  brands_toys.each {|toy| stock_brand+=toy["stock"].to_i }
+  brands_toys.each {|toy| full_price_brand += toy["full-price"].to_f}
+  #Calculate average price
+  brand_av_price = full_price_brand/stock_brand
+  #Calculate revenue
+  brands_toys.each {|toy| purchases_hashcount = toy["purchases"]}
+  purchases_hashcount.each {|brand| purchase_price+=brand["price"].to_f}
 
+  #puts brand name,toy stock, average price and sales values
+  puts "Brand name #{brand}"
+  puts "Total stock on hand is #{stock_brand}"
+  puts "Average price:$#{brand_av_price.round(2)}"
+  puts "Total revenue:$#{purchase_price}"
+  puts " "
+
+end
